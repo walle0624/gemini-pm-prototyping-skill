@@ -5,10 +5,11 @@ A Codex skill for product-manager-led prototyping with Gemini.
 This skill is for workflows where Codex:
 
 - clarifies requirements like a product manager
-- reuses a logged-in Gemini session through Chrome CDP
-- enforces `Pro + Canvas` before prompting
+- prefers Gemini CLI over the Gemini web app
+- defaults to `gemini-3.1-pro-preview` when available
+- runs a smoke test before the main prototype prompt
 - asks Gemini for a runnable single-file HTML prototype
-- extracts the generated code artifact
+- captures the result into a local `.html` artifact
 - reviews the output and sends revision briefs back to Gemini when needed
 
 ## Contents
@@ -18,4 +19,5 @@ This skill is for workflows where Codex:
 ## Notes
 
 - The workflow prefers Gemini revisions over local rewrites for meaningful prototype changes.
-- It explicitly guards against losing login state by requiring a Chrome CDP session when Gemini access depends on existing auth.
+- The preferred one-shot path is `gemini -m gemini-3.1-pro-preview --approval-mode yolo -p "<brief>" > artifact.html`.
+- The validated smoke test is `gemini -m gemini-3.1-pro-preview -p "只回复 OK"`.
